@@ -1,22 +1,17 @@
-# API 명세서
 
-## 일정(Schedule) API
+### Schedule API 명세서
 
-| 기능        | HTTP 메서드 | URI                 | 설명                                 | Request                                                                                                          | Response                                                                                                                   |
-|-------------|-------------|---------------------|--------------------------------------|------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
-| 일정 조회   | GET         | `/schedules`        | 모든 일정을 조회합니다.              | 없음                                                                                                               | ```json [ { "id": 1, "title": "회의", "description": "프로젝트 회의", "start_date": "2023-08-29", "end_date": "2023-08-29" } ] ``` |
-| 일정 생성   | POST        | `/schedules`        | 새로운 일정을 생성합니다.            | ```json { "title": "새 일정", "description": "일정 설명", "start_date": "2023-09-01", "end_date": "2023-09-02" } ```    | ```json { "id": 2, "title": "새 일정" } ```                                                                                   |
-| 일정 상세 조회 | GET      | `/schedules/{id}`   | ID로 특정 일정을 조회합니다.         | 없음                                                                                                               | ```json { "id": 1, "title": "회의", "description": "프로젝트 회의", "start_date": "2023-08-29", "end_date": "2023-08-29" } ```     |
-| 일정 수정   | PUT         | `/schedules/{id}`   | ID로 특정 일정을 수정합니다.         | ```json { "title": "수정된 일정", "description": "수정된 설명", "start_date": "2023-09-03", "end_date": "2023-09-04" } ``` | ```json { "id": 1, "title": "수정된 일정" } ```                                                                                 |
-| 일정 삭제   | DELETE      | `/schedules/{id}`   | ID로 특정 일정을 삭제합니다.         | 없음                                                                                                               | 없음                                                                                                                         |
+| HTTP Method | URI             | Description                        | Request Body                         | Response Body                                  | Status Code        |
+|-------------|-----------------|------------------------------------|--------------------------------------|------------------------------------------------|---------------------|
+| POST        | /schedules      | 일정을 저장                      | `{ "title": "일정 제목", "contents": "일정 내용" }` | `{ "id": 1, "title": "일정 제목", "contents": "일정 내용" }` | 201 Created         |
+| GET         | /schedules      | 일정 목록 조회                   | (없음)                             | `[ { "id": 1, "title": "일정 제목", "contents": "일정 내용" }, ...]` | 200 OK              |
+| GET         | /schedules/{id} | 특정 일정 조회                   | (없음)                             | `{ "id": 1, "title": "일정 제목", "contents": "일정 내용" }` | 200 OK              |
+| PUT         | /schedules/{id} | 일정 수정                        | `{ "title": "수정된 제목", "contents": "수정된 내용" }` | `{ "id": 1, "title": "수정된 제목", "contents": "수정된 내용" }` | 200 OK              |
+| DELETE      | /schedules/{id} | 일정 삭제                        | (없음)                             | (없음)                                         | 204 No Content      |
 
-## 댓글(Comment) API
+### Comment API 명세서
 
-| 기능        | HTTP 메서드 | URI                                      | 설명                                    | 요청 본문                                                         | 응답 본문                                                                                                |
-|-------------|-------------|------------------------------------------|-----------------------------------------|-------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
-| 댓글 조회   | GET         | `/schedules/{scheduleId}/comments`       | 특정 일정에 대한 모든 댓글을 조회합니다. | 없음                                                              | ```json [ { "id": 1, "schedule_id": 1, "content": "좋은 회의였습니다!" } ] ```                            |
-| 댓글 추가   | POST        | `/schedules/{scheduleId}/comments`       | 특정 일정에 댓글을 추가합니다.           | ```json { "content": "기대됩니다!" } ```                           | ```json { "id": 1, "schedule_id": 1, "content": "기대됩니다!" } ```                                      |
-| 댓글 상세 조회 | GET     | `/schedules/{scheduleId}/comments/{id}`  | ID로 특정 댓글을 조회합니다.             | 없음                                                              | ```json { "id": 1, "schedule_id": 1, "content": "좋은 회의였습니다!" } ```                            |
-| 댓글 수정   | PUT         | `/schedules/{scheduleId}/comments/{id}`  | ID로 특정 댓글을 수정합니다.             | ```json { "content": "수정된 댓글입니다." } ```                    | ```json { "id": 1, "schedule_id": 1, "content": "수정된 댓글입니다." } ```                               |
-| 댓글 삭제   | DELETE      | `/schedules/{scheduleId}/comments/{id}`  | ID로 특정 댓글을 삭제합니다.             | 없음                                                              | 없음                                                                                                     |
-
+| HTTP Method | URI                      | Description                        | Request Body                         | Response Body                                  | Status Code        |
+|-------------|--------------------------|------------------------------------|--------------------------------------|------------------------------------------------|---------------------|
+| POST        | /schedules/{id}/comments | 댓글 추가                        | `{ "contents": "댓글 내용" }`      | `{ "id": 1, "schedule_id": 1, "contents": "댓글 내용" }` | 201 Created         |
+| GET         | /schedules/{id}/comments | 특정 일정의 댓글 목록 조회      | (없음)                             | `[ { "id": 1, "schedule_id": 1, "contents": "댓글 내용" }, ...]` | 200 OK              |
