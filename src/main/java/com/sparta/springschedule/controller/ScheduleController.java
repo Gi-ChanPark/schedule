@@ -13,16 +13,17 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/schedules")
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
-    @PostMapping("/schedules")
+    @PostMapping
     public ResponseEntity<ScheduleSaveResponseDto> saveSchedule(@RequestBody ScheduleSaveRequestDto scheduleSaveRequestDto) {
         return ResponseEntity.ok(scheduleService.saveSchedule(scheduleSaveRequestDto));
     }
 
-    @GetMapping("/schedules")
+    @GetMapping
     public ResponseEntity<Page<ScheduleSimpleResponseDto>> getSchedule(
             @RequestParam(defaultValue = "1", required = false) int page,
             @RequestParam(defaultValue = "10", required = false) int size
@@ -30,12 +31,12 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.getSchedules(page, size));
     }
 
-    @PutMapping("schedules/{scheduleId}")
+    @PutMapping("/{scheduleId}")
     public ResponseEntity<ScheduleUpdateResponseDto> updateSchedule(@PathVariable Long scheduleId, @RequestBody ScheduleUpdateRequestDto scheduleUpdateRequestDto) {
         return ResponseEntity.ok(scheduleService.updateSchedule(scheduleId, scheduleUpdateRequestDto));
     }
 
-    @DeleteMapping("/schedules/{scheduleId}")
+    @DeleteMapping("/{scheduleId}")
     public void deleteSchedule(@PathVariable Long scheduleId) {
         scheduleService.deleteSchedule(scheduleId);
     }
