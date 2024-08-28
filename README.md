@@ -16,4 +16,4 @@
 | POST        | /schedules/{scheduleId}/comments | 댓글 추가                        | `{ "contents": "댓글 내용" }`      | `{ "id": 1, "schedule_id": 1, "contents": "댓글 내용" }` | 201 Created         |
 | GET         | /schedules/comments | 특정 일정의 댓글 목록 조회      | (없음)                             | `[ { "id": 1, "schedule_id": 1, "contents": "댓글 내용" }, ...]` | 200 OK              |
 
-![img.png](erd.png)
+![erd](https://github.com/user-attachments/assets/e7b9786e-a2d6-41a7-b4f5-f793ffe54b10)
